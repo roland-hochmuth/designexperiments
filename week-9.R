@@ -76,8 +76,8 @@ df$Order = factor(df$Order)
 df$Liked = factor(df$Liked)
 
 # Display the number of Liked by Teaser.
-ggplot() +
-  aes(x = df$Teaser, y = df$Liked) +
+ggplot(df) +
+  aes(x = Teaser, y = Liked) +
   geom_bar(stat = "identity")
 
 # Using a generalized linear mixed model (GLMM), conduct a test of order effects on Liked to ensure counterbalancing worked.
@@ -91,7 +91,7 @@ m = glmer("Liked ~ Teaser + (1|Subject)", data=df, family="binomial")
 Anova(m, type=3)
 
 # Conduct simultaneous post hoc pairwise comparisons among levels of Teaser. Be sure to use Holm's sequential Bonferroni procedure.
-summary(glht(m, lsm(pairwise ~ Teaser), data=df2, df=FALSE), test=adjusted(type="holm"))
+summary(glht(m, lsm(pairwise ~ Teaser), data=df, df=FALSE), test=adjusted(type="holm"))
 
 # Questions 17-23
 df = read.csv("vocab.csv")
