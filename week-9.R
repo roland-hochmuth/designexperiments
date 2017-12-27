@@ -1,5 +1,4 @@
-library(dplyr)
-library(ggplot2)
+library(tidyverse)
 library(car)
 library(emmeans)
 library(multcomp)
@@ -11,7 +10,7 @@ library(RVAideMemoire)
 setwd("~/Documents/repos/roland-hochmuth/designexperiments")
 
 # Questions 1-6
-df = read.csv("websearch3.csv")
+df = read_csv("websearch3.csv")
 head(df)
 
 # Determine the number of unique subjects.
@@ -35,7 +34,7 @@ Anova(m, type=3, test.statistic="F")
 summary(glht(m, mcp(Engine="Tukey")), test=adjusted(type="holm"))
 
 # Questions 7-10
-df = read.csv("socialvalue.csv")
+df = read_csv("socialvalue.csv")
 head(df)
 
 # Determine the number of unique subjects.
@@ -64,7 +63,7 @@ summary(glht(m, lsm(pairwise ~ Social * Clip)), test=adjusted(type="none"))
 p.adjust(c(0.00017, 0.59374), method="holm")
 
 # Questions 11-16
-df = read.csv("teaser.csv")
+df = read_csv("teaser.csv")
 head(df)
 
 # Determine the number of unique subjects.
@@ -94,7 +93,7 @@ Anova(m, type=3)
 summary(glht(m, lsm(pairwise ~ Teaser), data=df, df=FALSE), test=adjusted(type="holm"))
 
 # Questions 17-23
-df = read.csv("vocab.csv")
+df = read_csv("vocab.csv")
 head(df)
 
 # Determine the number of unique subjects.
@@ -143,7 +142,7 @@ Anova(m, type=3)
 summary(glht(m, lsm(pairwise ~ Social), data=df, df=FALSE), test=adjusted(type="holm"))
 
 # Questions 24 and 25.
-df = read.csv("websearch3.csv")
+df = read_csv("websearch3.csv")
 head(df)
 
 # Display a boxplot of Effort by Engine
