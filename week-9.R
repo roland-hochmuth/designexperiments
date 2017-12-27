@@ -66,7 +66,9 @@ df$Liked = factor(df$Liked)
 
 # http://www.tfrec.wsu.edu/ANOVA/index.html
 
-plot(df$Liked ~ df$Teaser)
+ggplot() +
+  aes(x = df$Teaser, y = df$Liked) +
+  geom_bar(stat = "identity")
 
 contrasts(df$Order) <- contr.sum
 m = glmer("Liked ~ Order + (1|Subject)", data=df, family="binomial")
@@ -82,6 +84,12 @@ summary(glht(m, lsm(pairwise ~ Teaser), data=df), test=adjusted(type="holm"))
 df = read.csv("vocab.csv")
 head(df)
 length(unique(df$Subject))
+
+df$Subject <- factor(df$Subject)
+df$Sex <- factor(df$Sex)
+df$Social <- factor(df$Social)
+df$Order <- factor(df$Order)
+df$Vocab <- as.integer(df$Vocab)
 
 df %>% group_by(Social, Sex) %>% summarise(Vocab = mean(Vocab)) -> groups
 
@@ -104,7 +112,7 @@ ks.test(x=x, y="pexp", rate=0.004405286, exact=TRUE)
 
 contrasts(df$Sex) <- contr.sum
 contrasts(df$Order) <- contr.sum
-m = glmer("Vocab ~ Order + (1|Subject)", data=df, family=Gamma(link="log"))
+m = glmer("Vocab ~ (Sex*Order) + (1|Subject)", data=df, family=Gamma(link="log"))
 Anova(m, type=3)
 
 contrasts(df$Sex) <- contr.sum
@@ -126,33 +134,6 @@ Anova(m, type=3) # type ignored
 plot(as.numeric(Effort) ~ Engine, data=df2)
 m = lmer(as.numeric(Effort) ~ Engine + (1|Subject), data=df2)
 summary(glht(m, mcp(Engine="Tukey")), test=adjusted(type="holm"))
-
-# Answers
-# 1. 30
-# 2. 152.67
-# 3. 0.0564
-# 4. No
-# 5. Incorrect, 0.0516, 0.0454
-# 6. True
-# 7. 16
-# 8. Incorrect, 163, 10
-# 9. .0179
-# 10. Incorrect, 0.0020, 0.0003
-# 11. 20
-# 12. Incorrect, Latin Square, Balanced Latin Square
-# 13. Incorrect, horror
-# 14. 0.4169
-# 15. Incorrect, 0
-# 16. 5
-# 17. 30
-# 18. 0
-# 19. .2734
-# 20. Incorrect, 0.8885
-# 21. 0.8407
-# 22. 0.578
-# 23. 7
-# 24. 0.0174
-# 25. 0.9381
 
 # References
 # http://www.tfrec.wsu.edu/ANOVA/index.html
