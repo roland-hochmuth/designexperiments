@@ -166,3 +166,6 @@ summary(glht(m, mcp(Engine="Tukey")), test=adjusted(type="holm"))
 # https://sebastiansauer.github.io/vis_interaction_effects/
 # https://cran.r-project.org/web/packages/emmeans/index.html
 # http://dplyr.tidyverse.org/index.html
+# http://rcompanion.org/handbook/G_12.html
+# https://cran.r-project.org/web/packages/ordinal/vignettes/clmm2_tutorial.pdf
+# https://cran.r-project.org/web/packages/ordinal/ordinal.pdf
