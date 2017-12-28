@@ -14,7 +14,7 @@ df = read_csv("websearch3.csv")
 head(df)
 
 # Determine the number of unique subjects.
-length(unique(df$Subject))
+n_distinct(df$Subject)
 
 df$Subject <- factor(df$Subject)
 df$Engine <- factor(df$Engine)
@@ -23,8 +23,7 @@ df$Searches <- as.integer(df$Searches)
 df$Effort <- order(df$Effort)
 
 # Determine the mean of the number of searches by search engine.
-df %>% group_by(Engine) %>% summarise(Searches = mean(Searches)) -> groups
-groups
+df %>% group_by(Engine) %>% summarise(Searches = mean(Searches))
 
 # Conduct a linear mixed model (LMM) analysis of variance on Searches by Engine.
 contrasts(df$Engine) <- contr.sum
@@ -38,7 +37,7 @@ df = read_csv("socialvalue.csv")
 head(df)
 
 # Determine the number of unique subjects.
-length(unique(df$Subject))
+n_distinct(df$Subject)
 
 df %>% group_by(Clip, Social) %>% summarise(mean = mean(Valued), n = n())
 
@@ -67,7 +66,7 @@ df = read_csv("teaser.csv")
 head(df)
 
 # Determine the number of unique subjects.
-length(unique(df$Subject))
+n_distinct(df$Subject)
 
 df$Subject = factor(df$Subject)
 df$Teaser = factor(df$Teaser)
@@ -97,7 +96,7 @@ df = read_csv("vocab.csv")
 head(df)
 
 # Determine the number of unique subjects.
-length(unique(df$Subject))
+n_distinct(df$Subject)
 
 df$Subject <- factor(df$Subject)
 df$Sex <- factor(df$Sex)
@@ -164,7 +163,7 @@ summary(glht(m, mcp(Engine="Tukey")), test=adjusted(type="holm"))
 # http://www.tfrec.wsu.edu/ANOVA/index.html
 # https://sebastiansauer.github.io/vis_interaction_effects/
 # https://cran.r-project.org/web/packages/emmeans/index.html
-# http://dplyr.tidyverse.org/index.html
+# https://www.tidyverse.org/
 # http://rcompanion.org/handbook/G_12.html
 # https://cran.r-project.org/web/packages/ordinal/vignettes/clmm2_tutorial.pdf
 # https://cran.r-project.org/web/packages/ordinal/ordinal.pdf
